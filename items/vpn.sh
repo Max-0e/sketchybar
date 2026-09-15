@@ -7,9 +7,11 @@ vpn_control=(
   update_freq=10
   click_script="$POPUP_CLICK_SCRIPT"
   script="$PLUGIN_DIR/vpn_state.sh"
-  popup.background.color=0x10000000
+  popup.background.color=0x30CCCCCC
   popup.blur_radius=5
-  popup.background.corner_radius=10
+  popup.background.corner_radius=16
+  popup.background.padding_left=2
+  popup.shadow=on
   popup.height=0
 )
 

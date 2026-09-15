@@ -100,5 +100,5 @@ sketchybar --add bracket connectivity.group wifi vpn.control \
 source $ITEM_DIR/bracket_spacer_right.sh
 source $ITEM_DIR/spotify.sh
 
-sketchybar --hotreload true
 sketchybar --update
+sketchybar --hotreload true
