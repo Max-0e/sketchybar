@@ -7,6 +7,7 @@ source $HOME/.config/sketchybar/icons.sh
 
 export FONT="SF Pro"
 export NERD_FONT="SauceCodePro Nerd Font"
+export SKETCHYBAR_ICONS_FONT="sketchybar-app-font"
 
 # This is used to determine if a monitor is used
 # Since the notch is -only- on the laptop, if a monitor isn't used,
@@ -27,7 +28,7 @@ else
   export BASE_ICON_FONT_SIZE=18.0
   export BASE_FONT_SIZE=16.0
   export LARGE_ICON_FONT_SIZE=25.0
-  export LARGE_FONT_SIZE=24.0
+  export LARGE_FONT_SIZE=25.0
   export BAR_HEIGHT=55
   export BRACKET_HEIGHT=40
   export INSET_BACKGROUND_HEIGHT=32
@@ -53,7 +54,7 @@ sketchybar --default updates=when_shown                       \
                      icon.padding_left=4                      \
                      icon.padding_right=4
 
-source $ITEM_DIR/apple.sh
+# source $ITEM_DIR/apple.sh
 source $ITEM_DIR/aerospace.sh
 source $ITEM_DIR/window_title.sh
 source $ITEM_DIR/clock.sh
@@ -82,11 +83,17 @@ do
 done
 
 sketchybar --add bracket left_items ${LEFT_ITEMS[@]} \
-           --set left_items background.color=0x99000000 \
+           --set left_items background.color=0x22000000 \
                             background.height=$BRACKET_HEIGHT \
-                            background.corner_radius=11
+                            background.corner_radius=16 \
+                            background.border_width=3 \
+                            background.border_color=0x33000000 \
+                            background.shadow=on
 
 sketchybar --add bracket right_items ${RIGHT_ITEMS[@]} \
-           --set right_items background.color=0x99000000 \
+           --set right_items background.color=0x22000000 \
                              background.height=$BRACKET_HEIGHT \
-                             background.corner_radius=11
+                             background.corner_radius=16 \
+                             background.border_width=3 \
+                             background.border_color=0x33000000 \
+                             background.shadow=on

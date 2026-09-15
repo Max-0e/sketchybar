@@ -7,11 +7,17 @@ for sid in $(aerospace list-workspaces --all); do
         --subscribe space.$sid aerospace_workspace_node_move \
         --set space.$sid \
         label.font="$NERD_FONT:BOLD:$LARGE_FONT_SIZE" \
-        icon.font="$NERD_FONT:BOLD:$LARGE_ICON_FONT_SIZE" \
+        label.padding_left=10 \
+        label.padding_right=11 \
+        icon.font="$SKETCHYBAR_ICONS_FONT:Regular:$LARGE_ICON_FONT_SIZE" \
+        icon.x_offset=3 \
+        icon.padding_left=5 \
+        icon.padding_right=4 \
         padding_left=5 \
         padding_right=5 \
         background.color=0x22ffffff \
-        background.corner_radius=5 \
+        background.corner_radius=16 \
+        background.border_color=0x33000000 \
         background.height=$INSET_BACKGROUND_HEIGHT \
         label="$sid" \
         click_script="aerospace workspace $sid" \

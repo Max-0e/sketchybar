@@ -1,52 +1,23 @@
 #!/usr/bin/env bash
 
 source $HOME/.config/sketchybar/icons.sh
+ICON_MAP=$HOME/.config/sketchybar/icon_map.sh
 
 if [ ! -z $FOCUSED_WORKSPACE ]; then
   if [ "$1" = "$FOCUSED_WORKSPACE" ]; then
-      sketchybar --set $NAME background.color=0x44ffffff
+      sketchybar --set $NAME background.color=0x44ffffff \
+                             background.border_width=2
   else
-      sketchybar --set $NAME background.color=0x22ffffff
+      sketchybar --set $NAME background.color=0x22ffffff \
+                             background.border_width=0
   fi
 fi
 
-windows=$(aerospace list-windows --workspace $1)
-icons=""
-if echo "$windows" | grep -q "Ghostty"; then
-  icons="$icons $TERMINAL"
-fi
-if echo "$windows" | grep -q "Arc"; then
-  icons="$icons $BROWSER"
-fi
-if echo "$windows" | grep -q "Teams"; then
-  icons="$icons $TEAMS"
-fi
-if echo "$windows" | grep -q "Outlook"; then
-  icons="$icons $MAIL"
-fi
-
-if echo "$windows" | grep -q "ZenNotes"; then
-  icons="$icons $NOTES"
-fi
-
-if echo "$windows" | grep -q "Discord"; then
-  icons="$icons $DISCORD"
-fi
-
-if echo "$windows" | grep -q "Spotify"; then
-  icons="$icons $SPOTIFY"
-fi
-
-if echo "$windows" | grep -q "Zulip"; then
-  icons="$icons $ZULIP"
-fi
+icons=$($ICON_MAP $(aerospace list-windows --workspace $1 | awk -F '|' '{print $2}' | xargs))
 
 if [ -z "$icons" ]; then
-  sketchybar --set $NAME icon.drawing=off label.drawing=on label="$1" \
-        label.padding_left=10 \
-        label.padding_right=10
+  sketchybar --set $NAME icon.drawing=off label.drawing=on label="$1"
 else
-  sketchybar --set $NAME icon.drawing=on label.drawing=off icon="$icons" \
-        icon.padding_right=25 \
-        icon.padding_left=0
+  icons=$(echo ${icons// /})
+  sketchybar --set $NAME icon.drawing=on label.drawing=off icon="$icons"
 fi
