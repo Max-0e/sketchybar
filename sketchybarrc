@@ -1,0 +1,92 @@
+PLUGIN_DIR="$HOME/.config/sketchybar/plugins"
+ITEM_DIR="$HOME/.config/sketchybar/items"
+
+source $HOME/.config/sketchybar/colors.sh
+source $HOME/.config/sketchybar/icons.sh
+
+
+export FONT="SF Pro"
+export NERD_FONT="SauceCodePro Nerd Font"
+
+# This is used to determine if a monitor is used
+# Since the notch is -only- on the laptop, if a monitor isn't used,
+# then that means the internal display is used
+MAIN_DISPLAY=$(system_profiler SPDisplaysDataType | grep -B 3 'Main Display:' | awk '/Display Type/ {print $3}')
+
+if [[ $MAIN_DISPLAY = "Built-in" ]]; then
+  export BASE_ICON_FONT_SIZE=16.0
+  export BASE_FONT_SIZE=14.0
+  export LARGE_ICON_FONT_SIZE=21.0
+  export LARGE_FONT_SIZE=20.0
+  export BAR_HEIGHT=35
+  export BRACKET_HEIGHT=25
+  export INSET_BACKGROUND_HEIGHT=22
+  export BAR_PADDING=10
+  export SPACE_PADDING=10
+else
+  export BASE_ICON_FONT_SIZE=18.0
+  export BASE_FONT_SIZE=16.0
+  export LARGE_ICON_FONT_SIZE=25.0
+  export LARGE_FONT_SIZE=24.0
+  export BAR_HEIGHT=55
+  export BRACKET_HEIGHT=40
+  export INSET_BACKGROUND_HEIGHT=32
+  export BAR_PADDING=15
+  export SPACE_PADDING=10
+fi
+
+sketchybar --bar height=$BAR_HEIGHT        \
+                 position=top     \
+                 padding_left=$BAR_PADDING  \
+                 padding_right=15 \
+                 color=0x00000000 \
+                 shadow=off
+
+sketchybar --default updates=when_shown                       \
+                     drawing=on                               \
+                     icon.font="$NERD_FONT:Regular:$BASE_ICON_FONT_SIZE"      \
+                     icon.color=0xffffffff                    \
+                     label.font="$NERD_FONT:BOLD:$BASE_FONT_SIZE"        \
+                     label.color=0xffffffff                   \
+                     label.padding_left=4                     \
+                     label.padding_right=4                    \
+                     icon.padding_left=4                      \
+                     icon.padding_right=4
+
+source $ITEM_DIR/apple.sh
+source $ITEM_DIR/aerospace.sh
+source $ITEM_DIR/window_title.sh
+source $ITEM_DIR/clock.sh
+source $ITEM_DIR/battery.sh
+source $ITEM_DIR/cpu.sh
+source $ITEM_DIR/ram.sh
+source $ITEM_DIR/wifi.sh
+source $ITEM_DIR/vpn.sh
+source $ITEM_DIR/spotify.sh
+
+sketchybar --hotreload true
+sketchybar --update
+
+ITEMS=$(sketchybar --query bar | jq -r '.items | .[]')
+
+LEFT_ITEMS=()
+RIGHT_ITEMS=()
+for item in $ITEMS
+do
+  POS=$(sketchybar --query ${item} | jq -r '.geometry.position')
+  if [ "$POS" = "left" ]; then
+    LEFT_ITEMS+=(${item})
+  elif [ "$POS" = "right" ]; then
+    RIGHT_ITEMS+=(${item})
+  fi
+done
+
+sketchybar --add bracket left_items ${LEFT_ITEMS[@]} \
+           --set left_items background.color=0x99000000 \
+                            background.height=$BRACKET_HEIGHT \
+                            background.corner_radius=11
+
+sketchybar --add bracket right_items ${RIGHT_ITEMS[@]} \
+           --set right_items background.color=0x99000000 \
+                             background.height=$BRACKET_HEIGHT \
+                             background.corner_radius=11
