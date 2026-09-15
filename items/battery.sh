@@ -4,7 +4,7 @@ sketchybar --add item battery right                      \
                          background.color=$BRACKET_BACKGROUND_COLOR \
                          background.height=$BRACKET_HEIGHT \
                          background.corner_radius=16 \
-                         label.padding_right=20   \
-                         icon.padding_left=20   \
+                         label.padding_right=10   \
+                         icon.padding_left=10   \
                          background.shadow=on \
            --subscribe battery system_woke

@@ -1,10 +1,10 @@
 sketchybar --add item music.artist right \
-           --set music.artist label.font="$NERD_FONT:BOLD:10" \
+           --set music.artist label.font="$NERD_FONT:BOLD:$BASE_SUBTITLE_FONT_SIZE" \
                               label=""                     \
                               icon.drawing=off              \
                               label.padding_right=8 \
                               width=0                       \
-                              y_offset=-8                    \
+                              y_offset=-$SUBTITLE_OFFSET
 
 sketchybar --add item music right \
            --set music \
@@ -17,7 +17,7 @@ sketchybar --add item music right \
              label.padding_right=0 \
              click_script="open -a Spotify" \
              update_freq=2 \
-             y_offset=8                    \
+             y_offset=$SUBTITLE_OFFSET                    \
              background.drawing=off \
            --subscribe music media_change
 

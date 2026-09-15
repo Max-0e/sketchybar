@@ -1,11 +1,15 @@
 #!/usr/bin/env sh
 export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:$PATH"
-MAX_CHARS=30
 ART_COUNTER_FILE="/tmp/sketchybar_art_counter"
 ART_LAST_TITLE_FILE="/tmp/sketchybar_art_last_title"
 ART_ITEM="${NAME}_art"
 
 truncate_str() {
+  MAX_CHARS=30
+  if [ $IS_INTERNAL_DISPLAY ]; then
+    MAX_CHARS=20
+  fi
+
   local s="$1"
   if [ "${#s}" -gt "$MAX_CHARS" ]; then
     echo "${s:0:$MAX_CHARS}…"
@@ -46,12 +50,16 @@ fetch_artwork() {
 
 set_artwork() {
   local art_file="$1"
+  scale=0.3
+  if [ $IS_INTERNAL_DISPLAY ]; then
+    scale=0.225
+  fi
   if [ -n "${art_file:-}" ] && [ -f "$art_file" ]; then
     sketchybar --set "$ART_ITEM" \
       drawing=on \
       background.image="$art_file" \
       background.image.drawing=on \
-      background.image.scale=0.3 \
+      background.image.scale=$scale \
       background.image.corner_radius=4
   else
     sketchybar --set "$ART_ITEM" drawing=off

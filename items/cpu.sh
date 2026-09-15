@@ -5,18 +5,18 @@ POPUP_CLICK_SCRIPT="sketchybar --set cpu.percent popup.drawing=toggle"
 MENU_WIDTH=150
 
 sketchybar --add item        cpu.temp right                 \
-           --set cpu.temp    label.font="$NERD_FONT:BOLD:10" \
+           --set cpu.temp    label.font="$NERD_FONT:BOLD:$BASE_SUBTITLE_FONT_SIZE" \
                              label=CPU                     \
                              icon.drawing=off              \
                              width=0                       \
-                             y_offset=-8                    \
+                             y_offset=-$SUBTITLE_OFFSET \
                              background.padding_right=10
 sketchybar --add item        cpu.percent right                 \
            --set cpu.percent label=CPU                     \
                              icon="$CPU" \
                              icon.drawing=on \
                              label.width=40                       \
-                             label.y_offset=4                    \
+                             label.y_offset=$SUBTITLE_OFFSET     \
                              update_freq=10                 \
                              background.padding_right=5   \
                              background.padding_left=5   \

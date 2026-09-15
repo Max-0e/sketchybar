@@ -17,17 +17,20 @@ MAIN_DISPLAY=$(system_profiler SPDisplaysDataType | grep -B 3 'Main Display:' | 
 if [[ $MAIN_DISPLAY = "Built-in" ]]; then
   export BASE_ICON_FONT_SIZE=16.0
   export BASE_FONT_SIZE=14.0
-  export LARGE_ICON_FONT_SIZE=21.0
-  export LARGE_FONT_SIZE=20.0
-  export BAR_HEIGHT=35
+  export BASE_SUBTITLE_FONT_SIZE=8
+  export LARGE_ICON_FONT_SIZE=17.0
+  export LARGE_FONT_SIZE=17.0
+  export BAR_HEIGHT=40
   export BRACKET_HEIGHT=25
   export INSET_BACKGROUND_HEIGHT=22
   export BAR_PADDING=10
   export SPACE_PADDING=10
-  export SPACER_WIDTH=10
+  export SPACER_WIDTH=5
+  export IS_INTERNAL_DISPLAY=$true
 else
   export BASE_ICON_FONT_SIZE=18.0
   export BASE_FONT_SIZE=16.0
+  export BASE_SUBTITLE_FONT_SIZE=10
   export LARGE_ICON_FONT_SIZE=25.0
   export LARGE_FONT_SIZE=25.0
   export BAR_HEIGHT=70
@@ -36,7 +39,10 @@ else
   export BAR_PADDING=15
   export SPACER_WIDTH=10
   export SPACE_PADDING=10
+  export IS_INTERNAL_DISPLAY=$false
 fi
+
+export SUBTITLE_OFFSET=$(expr $BASE_SUBTITLE_FONT_SIZE - 3)
 
 sketchybar --bar height=$BAR_HEIGHT        \
                  position=top     \
