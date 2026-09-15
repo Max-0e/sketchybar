@@ -1,6 +1,8 @@
+#!/usr/bin/env sh
+
 sketchybar --add item        ram.percent right                 \
            --set ram.percent label=RAM                    \
-                             icon="􀫦" \
+                             icon="" \
                              icon.drawing=on \
                              update_freq=2                 \
                              background.padding_right=5   \

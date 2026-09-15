@@ -10,7 +10,7 @@
                                                            # \
 sketchybar --add item        cpu.percent right                 \
            --set cpu.percent label=CPU                     \
-                             icon="􀫥" \
+                             icon="$CPU" \
                              icon.drawing=on \
                              update_freq=2                 \
                              background.padding_right=5   \

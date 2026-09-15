@@ -4,7 +4,9 @@ source $HOME/.config/sketchybar/colors.sh
 
 STATE=$(/opt/cisco/secureclient/bin/vpn state)
 
-if [ $(echo "$STATE" | grep -c 'state: Connected') -gt 0 ]; then 
+if [ -z $STATE]; then
+  sketchybar --set $NAME drawing=off
+elif [ $(echo "$STATE" | grep -c 'state: Connected') -gt 0 ]; then 
   LABEL=$(echo "$STATE" | grep 'notice:' | cut -d ':' -f 2 | xargs)
 
   if [ ${#LABEL} -gt 40 ]; then

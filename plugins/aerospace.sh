@@ -6,7 +6,7 @@ ICON_MAP=$HOME/.config/sketchybar/icon_map.sh
 if [ ! -z $FOCUSED_WORKSPACE ]; then
   if [ "$1" = "$FOCUSED_WORKSPACE" ]; then
       sketchybar --set $NAME background.color=0x44ffffff \
-                             background.border_width=2
+                             background.border_width=0
   else
       sketchybar --set $NAME background.color=0x22ffffff \
                              background.border_width=0
