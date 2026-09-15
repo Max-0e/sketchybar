@@ -16,13 +16,16 @@ MENU_WIDTH=150
 
 apple_logo=(
   icon=$APPLE_ICN
-  padding_right=15
-  padding_left=15
+  icon.font.size="$LARGE_ICON_FONT_SIZE"
+  padding_right=9
+  padding_left=9
   label.drawing=off
   click_script="$POPUP_CLICK_SCRIPT"
-  popup.background.color=0x30000000
+  popup.background.color=0x30CCCCCC
   popup.blur_radius=5
-  popup.background.corner_radius=10
+  popup.background.corner_radius=16
+  popup.background.padding_left=2
+  popup.shadow=on
   popup.height=0
 )
 
@@ -102,3 +105,9 @@ sketchybar --add item apple.logo left                  \
                                                        \
            --add item apple.shutdown popup.apple.logo    \
            --set apple.shutdown "${apple_shutdown[@]}"
+
+sketchybar --add bracket apple_bracket apple.logo \
+           --set apple_bracket background.color=0x22000000 \
+                               background.height=$BRACKET_HEIGHT \
+                               background.corner_radius=18 \
+                               background.shadow=on

@@ -8,7 +8,7 @@ ART_ITEM="${NAME}_art"
 truncate_str() {
   local s="$1"
   if [ "${#s}" -gt "$MAX_CHARS" ]; then
-    echo "${s:0:$MAX_CHARS}..."
+    echo "${s:0:$MAX_CHARS}…"
   else
     echo "$s"
   fi
@@ -77,11 +77,12 @@ if [ -n "$SPOTIFY_INFO" ]; then
   ART_URL=$(echo "$SPOTIFY_INFO" | cut -d'|' -f4)
 
   if [ -n "$TRACK" ] && [ -n "$ARTIST" ]; then
-    LABEL="$(truncate_str "$TRACK | $ARTIST")"
+    TRACK="$(truncate_str "$TRACK")"
+    ARTIST="$(truncate_str "$ARTIST")"
     ART_FILE=$(fetch_artwork "$TRACK" "$ART_URL") || true
     set_artwork "$ART_FILE"
-    # width=208: label.width(200) + padding_right(8). art item adds ~34px ? total 242px fixed.
-    sketchybar --set "$NAME" drawing=on label="$LABEL" label.drawing=on
+    sketchybar --set "$NAME" drawing=on label="$TRACK" label.drawing=on
+    sketchybar --set "$NAME.artist" drawing=on label="$ARTIST" label.drawing=on
     exit 0
   fi
 fi

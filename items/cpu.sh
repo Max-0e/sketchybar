@@ -1,35 +1,49 @@
 #!/usr/bin/env sh
 
-# sketchybar --add item        cpu.top right                 \
-           # --set cpu.top     label.font="$NERD_FONT:Medium:8" \
-                             # label=CPU                     \
-                             # icon.drawing=off              \
-                             # width=0                       \
-                             # y_offset=6                    \
-                             # background.padding_right=10   \
-                                                           # \
+POPUP_OFF="sketchybar --set cpu.percent popup.drawing=off"
+POPUP_CLICK_SCRIPT="sketchybar --set cpu.percent popup.drawing=toggle"
+MENU_WIDTH=150
+
+sketchybar --add item        cpu.temp right                 \
+           --set cpu.temp    label.font="$NERD_FONT:BOLD:10" \
+                             label=CPU                     \
+                             icon.drawing=off              \
+                             width=0                       \
+                             y_offset=-8                    \
+                             background.padding_right=10
 sketchybar --add item        cpu.percent right                 \
            --set cpu.percent label=CPU                     \
                              icon="$CPU" \
                              icon.drawing=on \
-                             update_freq=2                 \
+                             label.width=40                       \
+                             label.y_offset=4                    \
+                             update_freq=10                 \
                              background.padding_right=5   \
                              background.padding_left=5   \
+                             click_script="$POPUP_CLICK_SCRIPT" \
+                             popup.background.color=0x30CCCCCC \
+                             popup.blur_radius=5 \
+                             popup.background.corner_radius=16 \
+                             popup.background.padding_left=2 \
+                             popup.shadow=on \
+                             popup.height=0 \
                              script="$PLUGIN_DIR/cpu.sh"
-                                                           # \
-           # --add graph       cpu.sys right 25             \
-           # --set cpu.sys     width=0                       \
-                             # graph.color=$RED              \
-                             # graph.fill_color=$RED         \
-                             # y_offset=12                   \
-                             # label.drawing=off             \
-                             # icon.drawing=off              \
-                             # background.padding_right=10   \
-                                                           # \
-           # --add graph       cpu.user right 25            \
-           # --set cpu.user    graph.color=$BLUE             \
-                             # update_freq=2                 \
-                             # y_offset=12                   \
-                             # label.drawing=off             \
-                             # icon.drawing=off              \
-                             # background.padding_right=10   \
+
+sketchybar --add item testprocess popup.cpu.percent \
+           --set item testprocess \
+                 icon.drawing=off \
+                 label="TEST" \
+                 width=$MENU_WIDTH \
+                 background.height=30 \
+                 background.drawing=on
+
+for ((i = 1; i <= 5; i++)); do
+  sketchybar --add item cpu.top_process_$i popup.cpu.percent \
+             --set cpu.top_process_$i \
+                   icon.drawing=off \
+                   label="$i" \
+                   width=$MENU_WIDTH \
+                   background.height=30 \
+                   background.drawing=on
+done
+

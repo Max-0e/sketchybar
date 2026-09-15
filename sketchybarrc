@@ -24,6 +24,7 @@ if [[ $MAIN_DISPLAY = "Built-in" ]]; then
   export INSET_BACKGROUND_HEIGHT=22
   export BAR_PADDING=10
   export SPACE_PADDING=10
+  export SPACER_WIDTH=10
 else
   export BASE_ICON_FONT_SIZE=18.0
   export BASE_FONT_SIZE=16.0
@@ -33,6 +34,7 @@ else
   export BRACKET_HEIGHT=40
   export INSET_BACKGROUND_HEIGHT=32
   export BAR_PADDING=15
+  export SPACER_WIDTH=10
   export SPACE_PADDING=10
 fi
 
@@ -54,42 +56,43 @@ sketchybar --default updates=when_shown                       \
                      icon.padding_left=4                      \
                      icon.padding_right=4
 
+# left items
 source $ITEM_DIR/apple.sh
+source $ITEM_DIR/bracket_spacer_left.sh
 source $ITEM_DIR/aerospace.sh
+source $ITEM_DIR/bracket_spacer_left.sh
 source $ITEM_DIR/window_title.sh
+
+# center notch spacer
+sketchybar --add item center.notch center \
+           --set center.notch \
+             width=220 \
+             icon.drawing=off \
+             label.drawing=off \
+             background.drawing=off
+
+# right items
 source $ITEM_DIR/clock.sh
+source $ITEM_DIR/bracket_spacer_right.sh
 source $ITEM_DIR/battery.sh
+source $ITEM_DIR/bracket_spacer_right.sh
 source $ITEM_DIR/cpu.sh
 source $ITEM_DIR/ram.sh
+sketchybar --add bracket stats.group cpu.percent ram.percent \
+           --set stats.group background.color=$BRACKET_BACKGROUND_COLOR \
+                             background.height=$BRACKET_HEIGHT \
+                             background.corner_radius=16 \
+                             background.shadow=on
+source $ITEM_DIR/bracket_spacer_right.sh
 source $ITEM_DIR/wifi.sh
 source $ITEM_DIR/vpn.sh
+sketchybar --add bracket connectivity.group wifi vpn.control \
+           --set connectivity.group background.color=$BRACKET_BACKGROUND_COLOR \
+                                    background.height=$BRACKET_HEIGHT \
+                                    background.corner_radius=16 \
+                                    background.shadow=on
+source $ITEM_DIR/bracket_spacer_right.sh
 source $ITEM_DIR/spotify.sh
 
 sketchybar --hotreload true
 sketchybar --update
-
-ITEMS=$(sketchybar --query bar | jq -r '.items | .[]')
-
-LEFT_ITEMS=()
-RIGHT_ITEMS=()
-for item in $ITEMS
-do
-  POS=$(sketchybar --query ${item} | jq -r '.geometry.position')
-  if [ "$POS" = "left" ]; then
-    LEFT_ITEMS+=(${item})
-  elif [ "$POS" = "right" ]; then
-    RIGHT_ITEMS+=(${item})
-  fi
-done
-
-sketchybar --add bracket left_items ${LEFT_ITEMS[@]} \
-           --set left_items background.color=0x22000000 \
-                            background.height=$BRACKET_HEIGHT \
-                            background.corner_radius=16 \
-                            background.shadow=on
-
-sketchybar --add bracket right_items ${RIGHT_ITEMS[@]} \
-           --set right_items background.color=0x22000000 \
-                             background.height=$BRACKET_HEIGHT \
-                             background.corner_radius=16 \
-                             background.shadow=on
